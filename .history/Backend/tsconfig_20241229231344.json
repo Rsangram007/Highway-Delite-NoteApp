@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020",  
-    "module": "commonjs",  
+    "module": "commonjs", // Compatible with Node.js
     "rootDir": "./",  
     "outDir": "./dist",  
     "esModuleInterop": true,  

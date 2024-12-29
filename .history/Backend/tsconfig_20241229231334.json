@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2020",  
-    "module": "commonjs",  
-    "rootDir": "./",  
-    "outDir": "./dist",  
+    "target": "es2020", // Modern target for newer JavaScript features
+    "module": "commonjs", // Compatible with Node.js
+    "rootDir": "./", // Define the root directory for TypeScript files
+    "outDir": "./dist", // Output compiled JavaScript files into 'dist' folder
     "esModuleInterop": true,  
     "forceConsistentCasingInFileNames": true,
     "strict": true, 
