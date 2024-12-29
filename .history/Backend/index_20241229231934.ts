@@ -25,9 +25,7 @@ app.use("/note", noteRouter);
 
 const port = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome To Note App Backend");
-});
+
 const start = async (): Promise<void> => {
   try {
     const mongoURI = process.env.MONGO_URI;

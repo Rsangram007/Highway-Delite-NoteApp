@@ -26,7 +26,7 @@ app.use("/note", noteRouter);
 const port = process.env.PORT;
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome To Note App Backend");
+  res.send("Welcome To Note A");
 });
 const start = async (): Promise<void> => {
   try {

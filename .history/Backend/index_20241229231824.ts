@@ -5,7 +5,6 @@ import userRouter from "./routes/user.route";
 import noteRouter from "./routes/note.route";
 import connectDB from "./db/connect";
 import env from "dotenv";
-import  { Request, Response } from "express";
 env.config();
 const app = express();
 
@@ -25,9 +24,7 @@ app.use("/note", noteRouter);
 
 const port = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome To Note App Backend");
-});
+app.get(/"/")
 const start = async (): Promise<void> => {
   try {
     const mongoURI = process.env.MONGO_URI;
