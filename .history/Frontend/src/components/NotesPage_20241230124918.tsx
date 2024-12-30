@@ -22,14 +22,11 @@ export function NotesPage() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await axios.get(
-        "https://highway-delite-noteapp-1.onrender.com/note/Notes",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get("http://localhost:5000/note/Notes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setNotes(response.data);
     } catch (err) {
       console.error("Error fetching notes", err);
@@ -42,7 +39,7 @@ export function NotesPage() {
       if (!token) return;
 
       const response = await axios.get(
-        "https://highway-delite-noteapp-1.onrender.com/user/Getuser",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzcyNDc0ZDFlZWE3NDkyMzhiY2ZiZWYiLCJlbWFpbCI6InN1a2FudGFAZ21haWwuY29tIiwibmFtZSI6IlN1a2FudGEgYmVoZXJhIiwiaWF0IjoxNzM1NTQyNjM3LCJleHAiOjE3MzU1NDYyMzd9.fxCbW9SiYYdwfy4So_MX86WHzu0qpNKl8vOpapQt9Sk/user/Getuser",
         {
           headers: {
             Authorization: `Bearer ${token}`,

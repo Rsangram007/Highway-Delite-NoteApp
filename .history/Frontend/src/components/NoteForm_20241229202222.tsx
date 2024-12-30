@@ -21,7 +21,7 @@ export function NoteForm({ onNoteAdded }: NoteFormProps) {
       if (!token) return;
 
       const response = await axios.post(
-        "https://highway-delite-noteapp-1.onrender.com/note/Createnotes",
+        "http://localhost:5000/note/Createnotes",
         { content },
         {
           headers: {

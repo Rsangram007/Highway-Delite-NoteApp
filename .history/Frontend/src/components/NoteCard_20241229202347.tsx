@@ -17,14 +17,11 @@ export function NoteCard({ note, onDelete }: NoteCardProps) {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      await axios.delete(
-        `https://highway-delite-noteapp-1.onrender.com/note/notes/${note._id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:5000/note/notes/${note._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       onDelete(note._id);
     } catch (err) {
       console.error("Error deleting note", err);

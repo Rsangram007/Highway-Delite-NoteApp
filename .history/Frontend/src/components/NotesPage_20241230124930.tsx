@@ -22,14 +22,11 @@ export function NotesPage() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await axios.get(
-        "https://highway-delite-noteapp-1.onrender.com/note/Notes",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get("http://localhost:5000/note/Notes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setNotes(response.data);
     } catch (err) {
       console.error("Error fetching notes", err);

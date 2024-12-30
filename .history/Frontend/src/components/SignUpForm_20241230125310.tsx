@@ -38,14 +38,11 @@ export function SignUpForm() {
   const handleVerifyOtp = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://highway-delite-noteapp-1.onrender.com/user/verify-otp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, otp }),
-        }
-      );
+      const response = await fetch("http://localhost:5000/user/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp }),
+      });
       const data = await response.json();
       if (data.token) {
         localStorage.setItem("token", data.token); // Save JWT token
