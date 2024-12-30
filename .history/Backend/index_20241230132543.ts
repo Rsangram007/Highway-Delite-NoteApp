@@ -13,7 +13,7 @@ const app = express();
 app.use(
   cors({
     // origin: "https://noteapp-pearl-omega.vercel.app",
-    origin: "https://highway-delite-note-app.vercel.app",
+    origin: "https://highway-delite-note-app.vercel.app/",
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
