@@ -8,7 +8,7 @@ import env from "dotenv";
 import  { Request, Response } from "express";
 env.config();
 const app = express();
- 
+app.options("*", cors()); // Enable preflight across all routes
 
 app.use(
   cors({

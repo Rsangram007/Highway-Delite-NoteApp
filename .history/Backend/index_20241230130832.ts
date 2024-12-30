@@ -8,11 +8,11 @@ import env from "dotenv";
 import  { Request, Response } from "express";
 env.config();
 const app = express();
- 
+app.options("*", cors()); // Enable preflight across all routes
 
 app.use(
   cors({
-    origin: "https://noteapp-pearl-omega.vercel.app/",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
