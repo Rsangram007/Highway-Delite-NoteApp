@@ -5,14 +5,16 @@ import userRouter from "./routes/user.route";
 import noteRouter from "./routes/note.route";
 import connectDB from "./db/connect";
 import env from "dotenv";
-import { Request, Response } from "express";
+import  { Request, Response } from "express";
 env.config();
 const app = express();
+ 
 
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "DELETE", "PUT", "PATCH"],
+   
+    origin: "https://highway-delite-note-app.vercel.app",
+    methods: ["GET", "POST", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
@@ -21,7 +23,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/user", userRouter);
-app.use("/note", noteRouter);
+app.use("/note", noteRouter); 
 
 const port = process.env.PORT;
 
