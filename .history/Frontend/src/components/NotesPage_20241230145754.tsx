@@ -111,8 +111,9 @@
 //   );
 // }
 
+
 import { useState, useEffect } from "react";
-import axios from "axios";
+import jwt_decode from "jwt-decode"; // Install this library: npm install jwt-decode
 import { NoteForm } from "./NoteForm";
 import { NoteCard } from "./NoteCard";
 
@@ -129,55 +130,30 @@ interface User {
 export function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // State to track loading
 
   const fetchNotes = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-
-      const response = await axios.get(
-        "https://highway-delite-noteapp-1.onrender.com/note/Notes",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setNotes(response.data);
+      const response = await fetch("https://highway-delite-noteapp-1.onrender.com/note/Notes");
+      const data = await response.json();
+      setNotes(data);
     } catch (err) {
       console.error("Error fetching notes", err);
     }
   };
 
-  const fetchUserData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-
-      const response = await axios.get(
-        "https://highway-delite-noteapp-1.onrender.com/user/Getuser",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setUser(response.data.data);
-    } catch (err) {
-      console.error("Error fetching user data", err);
-    }
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Set loading to true while fetching
-      await fetchNotes();
-      await fetchUserData();
-      setLoading(false); // Set loading to false after data is fetched
-    };
+    // Decode token from localStorage
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded: any = jwt_decode(token);
+        setUser({ name: decoded.name, email: decoded.email });
+      } catch (err) {
+        console.error("Error decoding token", err);
+      }
+    }
 
-    fetchData();
+    fetchNotes();
   }, []);
 
   const handleNoteAdded = (newNote: Note) => {
@@ -196,48 +172,36 @@ export function NotesPage() {
   return (
     <div className="container mx-auto p-6">
       {/* Centered Box Container for User Info */}
-      {loading ? (
-        <div className="text-center">
-          <p className="text-xl text-gray-600">Loading...</p>
+      {user && (
+        <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg mb-8">
+          <h1 className="text-3xl font-semibold text-gray-800 text-center">
+            Welcome, {user.name}!
+          </h1>
+          <p className="text-xl text-gray-600 text-center mt-2">
+            Email: {user.email}
+          </p>
         </div>
-      ) : (
-        <>
-          {user && (
-            <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg mb-8">
-              <h1 className="text-3xl font-semibold text-gray-800 text-center">
-                Welcome, {user.name}!
-              </h1>
-              <p className="text-xl text-gray-600 text-center mt-2">
-                Email: {user.email}
-              </p>
-            </div>
-          )}
-
-          {/* Logout Button */}
-          <div className="text-center mb-6">
-            <button
-              onClick={handleLogout}
-              className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
-            >
-              Logout
-            </button>
-          </div>
-
-          {/* Note Form */}
-          <NoteForm onNoteAdded={handleNoteAdded} />
-
-          {/* Notes Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-            {notes.map((note) => (
-              <NoteCard
-                key={note._id}
-                note={note}
-                onDelete={handleNoteDeleted}
-              />
-            ))}
-          </div>
-        </>
       )}
+
+      {/* Logout Button */}
+      <div className="text-center mb-6">
+        <button
+          onClick={handleLogout}
+          className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
+        >
+          Logout
+        </button>
+      </div>
+
+      {/* Note Form */}
+      <NoteForm onNoteAdded={handleNoteAdded} />
+
+      {/* Notes Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        {notes.map((note) => (
+          <NoteCard key={note._id} note={note} onDelete={handleNoteDeleted} />
+        ))}
+      </div>
     </div>
   );
 }
