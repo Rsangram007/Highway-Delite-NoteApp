@@ -1,10 +1,13 @@
+ 
+ 
 import { useLocation } from "react-router-dom";
 import { SignInForm } from "./SignInForm";
 import { SignUpForm } from "./SignUpForm";
-import backgroundImage from "../image/photo.avif";
+import backgroundImage from "../image/photo.avif"
 export function AuthLayout() {
   const location = useLocation();
 
+   
   const isSignIn = location.pathname === "/";
 
   return (
@@ -17,6 +20,7 @@ export function AuthLayout() {
         </div>
       </div>
 
+      
       <div className="hidden lg:block lg:flex-1">
         <img
           src={backgroundImage}

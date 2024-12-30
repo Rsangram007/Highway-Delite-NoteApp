@@ -113,7 +113,7 @@
 
 
 import { useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode"; // Correct import
+import jwt_decode from "jwt-decode";  
 import { NoteForm } from "./NoteForm";
 import { NoteCard } from "./NoteCard";
 
@@ -144,10 +144,11 @@ export function NotesPage() {
   };
 
   useEffect(() => {
+    // Decode token from localStorage
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decoded: any = jwtDecode(token);  
+        const decoded: any = jwt_decode(token);
         setUser({ name: decoded.name, email: decoded.email });
       } catch (err) {
         console.error("Error decoding token", err);
@@ -158,11 +159,11 @@ export function NotesPage() {
   }, []);
 
   const handleNoteAdded = (newNote: Note) => {
-    setNotes((prevNotes) => [...prevNotes, newNote]);
+    setNotes((prevNotes) => [...prevNotes, newNote]); // Add new note to state
   };
 
   const handleNoteDeleted = (noteId: string) => {
-    setNotes(notes.filter((note) => note._id !== noteId));
+    setNotes(notes.filter((note) => note._id !== noteId)); // Remove note from state
   };
 
   const handleLogout = () => {
@@ -172,6 +173,7 @@ export function NotesPage() {
 
   return (
     <div className="container mx-auto p-6">
+      {/* Centered Box Container for User Info */}
       {user && (
         <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg mb-8">
           <h1 className="text-3xl font-semibold text-gray-800 text-center">
@@ -183,6 +185,7 @@ export function NotesPage() {
         </div>
       )}
 
+      {/* Logout Button */}
       <div className="text-center mb-6">
         <button
           onClick={handleLogout}
@@ -192,8 +195,10 @@ export function NotesPage() {
         </button>
       </div>
 
+      {/* Note Form */}
       <NoteForm onNoteAdded={handleNoteAdded} />
 
+      {/* Notes Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {notes.map((note) => (
           <NoteCard key={note._id} note={note} onDelete={handleNoteDeleted} />
@@ -202,3 +207,4 @@ export function NotesPage() {
     </div>
   );
 }
+

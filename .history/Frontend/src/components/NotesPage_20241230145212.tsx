@@ -113,7 +113,7 @@
 
 
 import { useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode"; // Correct import
+import jwtDecode from "jwt-decode"; // Correct import
 import { NoteForm } from "./NoteForm";
 import { NoteCard } from "./NoteCard";
 

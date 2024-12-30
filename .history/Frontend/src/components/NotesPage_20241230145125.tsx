@@ -113,7 +113,7 @@
 
 
 import { useState, useEffect } from "react";
-import {jwtDecode} from "jwt-decode"; // Correct import
+import jwtDecode from "jwt-decode"; // Correct import
 import { NoteForm } from "./NoteForm";
 import { NoteCard } from "./NoteCard";
 
@@ -147,7 +147,7 @@ export function NotesPage() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decoded: any = jwtDecode(token);  
+        const decoded: any = jwtDecode(token); // Use the correct `jwtDecode` function
         setUser({ name: decoded.name, email: decoded.email });
       } catch (err) {
         console.error("Error decoding token", err);
